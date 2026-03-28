@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>AGGRESSOR Chess</title>
+  <meta name="description" content="Starkes Web-Schach mit aggressiver Stockfish-KI. Kostenlos, offline spielbar, alle Geräte." />
+  <meta name="theme-color" content="#0c0e16" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="AGGRESSOR" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="AGGRESSOR Chess" />
+  <meta property="og:description" content="Starkes aggressives Schach – kostenlos auf allen Geräten" />
+  <meta property="og:type" content="website" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-512.png" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- Top Bar -->
+    <header id="topbar">
+      <div id="logo">♟ AGGRESSOR</div>
+      <div id="mode-toggle">
+        <button class="mode-btn active" data-mode="vs_ai" id="btn-vs-ai">vs. KI</button>
+        <button class="mode-btn" data-mode="vs_human" id="btn-vs-human">vs. Mensch</button>
+      </div>
+      <div id="engine-badge">
+        <span class="badge-dot"></span>
+        <span id="engine-label">Engine lädt…</span>
+      </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main id="layout">
+
+      <!-- Board Column -->
+      <section id="board-col">
+        <div id="board-wrap">
+          <div id="rank-labels-left"></div>
+          <div id="board-grid"></div>
+          <div id="rank-labels-right"></div>
+        </div>
+        <div id="file-labels"></div>
+      </section>
+
+      <!-- Panel Column -->
+      <aside id="panel">
+
+        <!-- Turn / Status -->
+        <div id="status-box">
+          <div id="turn-indicator">Warte auf Engine…</div>
+          <div id="eval-bar-wrap">
+            <div id="eval-bar-fill"></div>
+            <span id="eval-label"></span>
+          </div>
+        </div>
+
+        <!-- Difficulty -->
+        <div class="panel-section">
+          <div class="section-label">Schwierigkeit</div>
+          <div id="diff-buttons"></div>
+        </div>
+
+        <!-- Aggression Threshold -->
+        <div class="panel-section">
+          <div class="section-label">Aggressions-Schwellwert: <span id="threshold-val">45</span> cp</div>
+          <input type="range" id="threshold-slider" min="0" max="150" value="45" step="5" />
+          <div class="hint">0 = reines Stockfish &nbsp;|&nbsp; 150 = maximale Aggression</div>
+        </div>
+
+        <!-- Move History -->
+        <div class="panel-section" style="flex:1; min-height:0;">
+          <div class="section-label">Zughistorie</div>
+          <div id="move-list"></div>
+        </div>
+
+        <!-- Captured pieces -->
+        <div class="panel-section">
+          <div id="captured-w"><span class="cap-label">Weiß verloren:</span></div>
+          <div id="captured-b"><span class="cap-label">Schwarz verloren:</span></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div id="action-buttons">
+          <button id="btn-new"  class="action-btn green">Neues Spiel</button>
+          <button id="btn-undo" class="action-btn blue">⬅ Zurück</button>
+          <button id="btn-flip" class="action-btn purple">⇅ Drehen</button>
+        </div>
+
+        <!-- Install PWA -->
+        <div id="install-wrap" style="display:none;">
+          <button id="btn-install" class="action-btn gold">📲 App installieren</button>
+        </div>
+
+      </aside>
+    </main>
+
+    <!-- Overlays -->
+    <div id="promotion-overlay" class="overlay hidden">
+      <div class="overlay-box">
+        <div class="overlay-title">Bauernumwandlung</div>
+        <div id="promo-choices"></div>
+      </div>
+    </div>
+
+    <div id="gameover-overlay" class="overlay hidden">
+      <div class="overlay-box">
+        <div class="overlay-title" id="gameover-title">Spielende</div>
+        <div id="gameover-msg"></div>
+        <button id="btn-gameover-new" class="action-btn green" style="margin-top:20px;">Neues Spiel</button>
+      </div>
+    </div>
+
+  </div><!-- #app -->
+
+  <script src="lib/chess.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

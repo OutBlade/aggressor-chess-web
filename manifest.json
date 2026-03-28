@@ -1,0 +1,26 @@
+{
+  "name": "AGGRESSOR Chess",
+  "short_name": "Schach",
+  "description": "Starkes Web-Schach mit aggressiver Stockfish-KI. Alle Plattformen, offline spielbar.",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0c0e16",
+  "theme_color": "#0c0e16",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "lang": "de"
+}
