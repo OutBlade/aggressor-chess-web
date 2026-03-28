@@ -32,6 +32,7 @@ let game        = new Chess();
 let flipped     = false;
 let mode        = 'vs_ai';      // 'vs_ai' | 'vs_human'
 let difficulty  = 'Mittel';
+let playstyle   = 'Aggressiv';  // 'Aggressiv' | 'Normal' | 'Passiv'
 let selected    = null;         // currently selected square ('e2' etc.)
 let legalDests  = [];
 let lastMove    = null;         // {from, to}
@@ -120,40 +121,38 @@ async function sfGetMoves(fen, cfg) {
   });
 }
 
-// ── Aggression Scorer ─────────────────────────────────────────────────────────
-function aggressionScore(fen, uciMove) {
+// ── Style Scorer ──────────────────────────────────────────────────────────────
+function styleScore(fen, uciMove) {
   const g      = new Chess(fen);
   const from   = uciMove.slice(0, 2);
   const to     = uciMove.slice(2, 4);
   const promo  = uciMove[4] || undefined;
   const piece  = g.get(from);
   const victim = g.get(to);
-  let score    = 0;
 
-  // Capture bonus
+  let agg = 0;
+
   if (victim) {
     const vv = PIECE_VALUES[victim.type] || 0;
     const av = PIECE_VALUES[piece?.type] || 0;
-    score += vv / 8;
-    if (av > vv) score += 120;   // sacrifice
+    agg += vv / 8;
+    if (av > vv) agg += 120;
   }
 
-  // Execute move and check result
   const mv = g.move({ from, to, promotion: promo });
   if (!mv) return 0;
 
-  // Check
-  if (g.in_check()) score += 180;
+  if (g.in_check()) agg += 180;
 
-  // Enemy king position
-  let ekFile = null, ekRank = null;
+  let ekFile = null, ekRank = null, mykFile = null, mykRank = null;
   const board = g.board();
   const moverColor = piece?.color;
   for (let r = 0; r < 8; r++) {
     for (let f = 0; f < 8; f++) {
       const p = board[r][f];
-      if (p && p.type === 'k' && p.color !== moverColor) {
-        ekFile = f; ekRank = r;
+      if (p && p.type === 'k') {
+        if (p.color !== moverColor) { ekFile = f; ekRank = r; }
+        else { mykFile = f; mykRank = r; }
       }
     }
   }
@@ -162,28 +161,44 @@ function aggressionScore(fen, uciMove) {
     const toFile = to.charCodeAt(0) - 97;
     const toRank = 8 - parseInt(to[1]);
     const dist   = Math.max(Math.abs(toFile - ekFile), Math.abs(toRank - ekRank));
-    if (dist <= 2) score += 60;
+    if (dist <= 2) agg += 60;
 
     const fromFile = from.charCodeAt(0) - 97;
     const fromRank = 8 - parseInt(from[1]);
     const distBefore = Math.max(Math.abs(fromFile - ekFile), Math.abs(fromRank - ekRank));
-    score += (distBefore - dist) * 15;
+    agg += (distBefore - dist) * 15;
 
-    // Rook/Queen aligned with king file
     if (piece && (piece.type === 'r' || piece.type === 'q')) {
-      if (toFile === ekFile)                score += 70;
-      else if (Math.abs(toFile - ekFile) === 1) score += 35;
+      if (toFile === ekFile)                agg += 70;
+      else if (Math.abs(toFile - ekFile) === 1) agg += 35;
     }
   }
 
-  // Pawn advance
   if (piece && piece.type === 'p') {
     const toRankNum = parseInt(to[1]);
     const advRank   = piece.color === 'w' ? toRankNum : 9 - toRankNum;
-    if (advRank >= 5) score += 25;
+    if (advRank >= 5) agg += 25;
   }
 
-  return score;
+  if (playstyle === 'Aggressiv') return agg;
+
+  let pas = 0;
+  if (piece && piece.type === 'p') pas -= 50;
+
+  if (mykFile !== null) {
+    const toFile = to.charCodeAt(0) - 97;
+    const toRank = 8 - parseInt(to[1]);
+    const fromFile = from.charCodeAt(0) - 97;
+    const fromRank = 8 - parseInt(from[1]);
+    const my_d_to = Math.max(Math.abs(toFile - mykFile), Math.abs(toRank - mykRank));
+    const my_d_from = Math.max(Math.abs(fromFile - mykFile), Math.abs(fromRank - mykRank));
+    pas += (my_d_from - my_d_to) * 15;
+    if (my_d_to <= 2) pas += 30;
+  }
+  
+  pas -= Math.floor(agg / 2);
+  
+  return pas;
 }
 
 // ── Aggressor Engine (Stockfish + override) ───────────────────────────────────
@@ -203,18 +218,19 @@ async function getAggressorMove() {
 
   // Filter pool within threshold
   const pool = candidates.filter(c => bestScore - c.score <= threshold);
-  if (pool.length <= 1) return bestMove;
+  
+  if (playstyle === 'Normal' || pool.length <= 1) return bestMove;
 
-  // Score for aggression
-  const scored = pool.map(c => ({ ...c, aggScore: aggressionScore(fen, c.move) }));
-  scored.sort((a, b) => b.aggScore - a.aggScore);
+  // Score for playstyle
+  const scored = pool.map(c => ({ ...c, styleScore: styleScore(fen, c.move) }));
+  scored.sort((a, b) => b.styleScore - a.styleScore);
 
-  const bestAgg = scored.find(s => s.move === bestMove)?.aggScore ?? 0;
-  const topAgg  = scored[0];
+  const bestStyle = scored.find(s => s.move === bestMove)?.styleScore ?? 0;
+  const topStyle  = scored[0];
 
-  if (topAgg.aggScore >= bestAgg + AGGR_MIN_ADVANTAGE && topAgg.move !== bestMove) {
-    console.log(`[AGGRESSOR] Override: ${topAgg.move} (agg:${topAgg.aggScore}) vs SF: ${bestMove} (agg:${bestAgg}), Δcp=${bestScore - topAgg.score}`);
-    return topAgg.move;
+  if (topStyle.styleScore >= bestStyle + AGGR_MIN_ADVANTAGE && topStyle.move !== bestMove) {
+    console.log(`[AGGRESSOR] Override: ${topStyle.move} (style:${topStyle.styleScore}) vs SF: ${bestMove} (style:${bestStyle}), Δcp=${bestScore - topStyle.score}`);
+    return topStyle.move;
   }
   return bestMove;
 }
@@ -606,6 +622,27 @@ function setupActionButtons() {
   });
 }
 
+function setupStyleButtons() {
+  const container = document.getElementById('style-buttons');
+  if (!container) return;
+  container.innerHTML = '';
+  container.style.display = 'grid';
+  container.style.gridTemplateColumns = '1fr 1fr 1fr';
+  container.style.gap = '5px';
+  const styles = ['Aggressiv', 'Normal', 'Passiv'];
+  styles.forEach(name => {
+    const btn = document.createElement('button');
+    btn.className = 'diff-btn' + (name === playstyle ? ' active' : '');
+    btn.textContent = name;
+    btn.onclick = () => {
+      playstyle = name;
+      container.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    };
+    container.appendChild(btn);
+  });
+}
+
 // ── PWA Install ───────────────────────────────────────────────────────────────
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -645,6 +682,7 @@ if ('serviceWorker' in navigator) {
 // ── Boot ──────────────────────────────────────────────────────────────────────
 window.addEventListener('load', () => {
   setupDiffButtons();
+  setupStyleButtons();
   setupModeButtons();
   setupActionButtons();
   renderCoords();
