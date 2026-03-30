@@ -4,7 +4,7 @@
  * Shows update notification when new version is deployed.
  */
 
-const CACHE_NAME = 'aggressor-chess-v2';
+const CACHE_NAME = 'aggressor-chess-v3';
 const ASSETS = [
   './',
   './index.html',
