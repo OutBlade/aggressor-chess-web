@@ -1,10 +1,8 @@
 # Aggressor Chess
 
-<img src="https://img.shields.io/badge/Live%20Demo-Click%20Here-blue?style=for-the-badge" alt="Live Demo">
+![Aggressor Chess](https://placehold.co/800x400/1a1a2e/4ecca3?text=Aggressor+Chess+Web+Game)
 
 A web-based chess game with intelligent AI opponent. This application provides a modern chess experience with a challenging computer opponent offering multiple difficulty levels.
-
-Perfect for chess enthusiasts looking to test their skills against a challenging AI opponent.
 
 ## Features
 
