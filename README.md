@@ -1,5 +1,7 @@
 # Aggressor Chess
 
+![Aggressor Chess Screenshot](https://outblade.github.io/aggressor-chess-web/screenshot.png)
+
 A web-based chess game with intelligent AI opponent. This application provides a modern chess experience with a challenging computer opponent offering multiple difficulty levels.
 
 Perfect for chess enthusiasts looking to test their skills against a challenging AI opponent.
