@@ -39,25 +39,37 @@ Ein webbasiertes Schachspiel mit aggressiver KI-Gegner. Diese Anwendung bietet e
 
 <div align="center">
 
-### 🖼️ Spielvorschau
-```
-8 ♔  ♕  ♖  ♗  ♘
-♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟
-♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟
-♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟
-♙ ♙ ♗ ♘ ♖ ♔ ♕ ♗ ♘
-♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟
-♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟
-♟ ♟ ♟ ♟ ♟ ♟ ♟
-♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟
-```
+### 🖼️ Website-Vorschau
+**🔗 [▶️ Aggressor Chess Live Demo](https://outblade.github.io/aggressor-chess-web/)**
 
-### 🌐 Online spielen
-**🔗 [▶️ Schach starten](https://outblade.github.io/aggressor-chess-web/)**
+**Besuchen Sie die Live-Demo:**
+- ♟️ Voll funktionsfähiges Schachspiel mit KI-Gegner
+- 🤖 Intelligente KI-Engine mit verschiedenen Schwierigkeitsgraden
+- 🎮 Drag-and-Drop Interface für Figurenbewegung
+- 📊 Echtzeit-Spielanalyse und Positionsbewertung
+- 📱 Mobile-optimiertes responsives Design
 
-**💡 Tipp**: Wählen Sie Ihren Schwierigkeitsgrad und spielen Sie gegen den KI-Gegner!
+**Funktionen im Überblick:**
+- Vollständige Schachregeln und Figurenbewegung
+- Mehrere Schwierigkeitsgrade (Anfänger bis Meister)
+- Automatisches Speichern und Laden von Spielständen
+- Zugverlauf und Spielhistorie
 
-</div>
+---
+
+### 🌐 Technische Details
+
+**�️ Technologie-Stack:**
+- **Frontend:** HTML5 Canvas, CSS3, Vanilla JavaScript
+- **Game Engine:** Custom Chess Engine mit Minimax-Algorithmus
+- **AI:** Alpha-Beta-Pruning mit Positionsbewertung
+- **Deployment:** GitHub Pages mit HTTPS
+
+**⚡ Performance-Features:**
+- Clientseitige Spiellogik ohne Serverlatenz
+- Optimierte KI-Berechnungen mit Web Workers
+- Smooth Canvas-Rendering mit 60 FPS
+- Responsive Touch-Unterstützung
 
 ---
 
