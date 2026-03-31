@@ -1,301 +1,221 @@
-# ♟️ Aggressor Chess Web
+# Aggressor Chess
 
-<div align="center">
+A web-based chess game with intelligent AI opponent. This application provides a modern chess experience with a challenging computer opponent offering multiple difficulty levels.
 
-![JavaScript](https://img.shields.io/badge/JavaScript-yellow.svg)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26.svg)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6.svg)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Stars](https://img.shields.io/github/stars/OutBlade/aggressor-chess-web?style=social)
-![Forks](https://img.shields.io/github/forks/OutBlade/aggressor-chess-web?style=social)
+Perfect for chess enthusiasts looking to test their skills against a challenging AI opponent.
 
-[♟️ Play Online](#live-demo) • [📖 Documentation](#documentation) • [🛠️ Installation](#installation) • [💡 Usage](#usage) • [🤝 Contributing](#contributing)
+## Features
 
-</div>
+- **Complete Chess**: All standard chess rules and pieces
+- **AI Opponent**: Intelligent computer opponent with various difficulty levels
+- **Interactive Interface**: Drag-and-drop piece movement
+- **Game Analysis**: Real-time move evaluation and position assessment
+- **Difficulty Levels**: Beginner, Intermediate, Master
+- **Mobile-Friendly**: Responsive design for all devices
+- **Game States**: Automatic save and load functionality
 
----
+## Live Demo
 
-## 📋 Overview
+Visit the live demo to experience the full chess game:
 
-Ein webbasiertes Schachspiel mit aggressiver KI-Gegner. Diese Anwendung bietet eine moderne Schach-Erfahrung mit einem intelligenten Computergegner, der verschiedene Schwierigkeitsgrade bietet.
+[Aggressor Chess Live Demo](https://outblade.github.io/aggressor-chess-web/)
 
-**🎯 Perfekt für Schach-Enthusiasten, die ihre Fähigkeiten gegen einen herausfordernden KI-Gegner testen möchten.**
+**Key Features:**
+- Fully functional chess game with AI opponent
+- Intelligent AI engine with multiple difficulty levels
+- Drag-and-drop interface for piece movement
+- Real-time game analysis and position evaluation
+- Mobile-optimized responsive design
 
----
+## Installation
 
-## ✨ Key Features
-
-- ♟️ **Vollständiges Schach**: Alle Standard-Schachregeln und Figuren
-- 🤖 **KI-Gegner**: Intelligenter Computergegner mit verschiedenen Schwierigkeitsgraden
-- 🎮 **Interaktives Interface**: Drag-and-Drop Figurenbewegung
-- 📊 **Spielanalyse**: Echtzeitige Bewertung von Zügen und Positionen
-- 🏆 **Schwierigkeitsgrade**: Anfänger, Fortgeschrittene, Meister
-- 📱 **Mobile-Friendly**: Responsives Design für alle Geräte
-- 💾 **Spielstände**: Automatisches Speichern und Laden von Spielen
-
----
-
-## 🎬 Live Demo
-
-<div align="center">
-
-### 🖼️ Website-Vorschau
-**🔗 [▶️ Aggressor Chess Live Demo](https://outblade.github.io/aggressor-chess-web/)**
-
-**Besuchen Sie die Live-Demo:**
-- ♟️ Voll funktionsfähiges Schachspiel mit KI-Gegner
-- 🤖 Intelligente KI-Engine mit verschiedenen Schwierigkeitsgraden
-- 🎮 Drag-and-Drop Interface für Figurenbewegung
-- 📊 Echtzeit-Spielanalyse und Positionsbewertung
-- 📱 Mobile-optimiertes responsives Design
-
-**Funktionen im Überblick:**
-- Vollständige Schachregeln und Figurenbewegung
-- Mehrere Schwierigkeitsgrade (Anfänger bis Meister)
-- Automatisches Speichern und Laden von Spielständen
-- Zugverlauf und Spielhistorie
-
----
-
-### 🌐 Technische Details
-
-**�️ Technologie-Stack:**
-- **Frontend:** HTML5 Canvas, CSS3, Vanilla JavaScript
-- **Game Engine:** Custom Chess Engine mit Minimax-Algorithmus
-- **AI:** Alpha-Beta-Pruning mit Positionsbewertung
-- **Deployment:** GitHub Pages mit HTTPS
-
-**⚡ Performance-Features:**
-- Clientseitige Spiellogik ohne Serverlatenz
-- Optimierte KI-Berechnungen mit Web Workers
-- Smooth Canvas-Rendering mit 60 FPS
-- Responsive Touch-Unterstützung
-
----
-
-## 🛠️ Installation
-
-### Voraussetzungen
+### Prerequisites
 - [Node.js](https://nodejs.org/en/) (>= 14.0)
-- [npm](https://www.npmjs.com/) oder [yarn](https://yarnpkg.com/)
-- Moderner Webbrowser mit JavaScript-Unterstützung
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- Modern web browser with JavaScript support
 
-### Schnellstart
+### Quick Start
 ```bash
-# Repository klonen
+# Clone the repository
 git clone https://github.com/OutBlade/aggressor-chess-web.git
 cd aggressor-chess-web
 
-# Abhängigkeiten installieren
+# Install dependencies
 npm install
 
-# Entwicklungsserver starten
+# Start development server
 npm run dev
 ```
 
-### Produktionsbuild
+### Production Build
 ```bash
-# Für Produktion optimieren
+# Build for production
 npm run build
 
-# Anwendung bereitstellen
-# Die gebauten Dateien im /public Verzeichnis bereitstellen
+# Deploy the built files from /public directory
 ```
 
----
+## Usage
 
-## 💡 Usage
-
-### Grundlegende Bedienung
+### Basic Usage
 ```javascript
-// Spiel initialisieren
+// Initialize the game
 const game = new ChessGame({
     difficulty: 'medium', // 'easy', 'medium', 'hard'
     playerColor: 'white',
     aiOpponent: true
 });
 
-// Spielbrett initialisieren
+// Initialize the board
 game.initialize();
 
-// Figur bewegen
-game.movePiece('e2', 'e4'); // Bauer nach e4
-game.movePiece('d1', 'h5'); // Dame nach h5
+// Move pieces
+game.movePiece('e2', 'e4'); // Pawn to e4
+game.movePiece('d1', 'h5'); // Queen to h5
 
-// KI-Zug abrufen
+// Get AI move
 const aiMove = game.getAIMove();
 game.makeMove(aiMove.from, aiMove.to);
 ```
 
-### Erweiterte Funktionen
+### Advanced Features
 ```javascript
-// Schwierigkeit anpassen
+// Adjust difficulty
 game.setDifficulty('hard');
 
-// Spiel analysieren
+// Analyze position
 const analysis = game.analyzePosition();
-console.log('Positionsbewertung:', analysis.score);
+console.log('Position evaluation:', analysis.score);
 
-// Spielstand speichern
-game.saveGame('mein_spiel_001');
+// Save game
+game.saveGame('my_game_001');
 
-// Historie laden
+// Load game history
 const history = game.getGameHistory();
-game.loadGame('mein_spiel_001');
+game.loadGame('my_game_001');
 ```
 
-### KI-Engine Konfiguration
+### AI Engine Configuration
 ```javascript
-// KI-Verhalten anpassen
+// Configure AI behavior
 const aiConfig = {
-    depth: 4,           // Suchtiefe
-    timeLimit: 5000,    // Zeitlimit pro Zug in ms
+    depth: 4,           // Search depth
+    timeLimit: 5000,    // Time limit per move in ms
     style: 'aggressive', // 'defensive', 'balanced'
-    openingBook: true    // Eröffnungsbuch verwenden
+    openingBook: true   // Use opening book
 };
 
 game.setAIConfig(aiConfig);
 ```
 
----
-
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 aggressor-chess-web/
-├── 📁 src/                    # Quellcode
-│   ├── 📄 chess.js          # Spiellogik
-│   ├── 📄 ai.js             # KI-Engine
-│   ├── 📄 ui.js             # Benutzeroberfläche
-│   └── 📄 pieces.js         # Schachfiguren
-├── 📁 public/                 # Statische Dateien
-│   ├── 📄 index.html        # Hauptseite
-│   ├── 📄 css/              # Stylesheets
-│   └── 📄 js/               # Gebündeltes JavaScript
-├── 📄 package.json          # Abhängigkeiten
-├── 📄 README.md             # Diese Datei
-└── 📄 LICENSE               # MIT Lizenz
+├── src/                    # Source code
+│   ├── chess.js          # Game logic
+│   ├── ai.js             # AI engine
+│   ├── ui.js             # User interface
+│   └── pieces.js         # Chess pieces
+├── public/                 # Static files
+│   ├── index.html        # Main page
+│   ├── css/              # Stylesheets
+│   └── js/               # Bundled JavaScript
+├── package.json          # Dependencies
+├── README.md             # This file
+└── LICENSE               # MIT License
 ```
 
----
-
-## 🧪 Testing
+## Testing
 
 ```bash
-# Einheitentests
+# Unit tests
 npm test
 
-# Integrationstests
+# Integration tests
 npm run test:integration
 
-# Playwright E2E-Tests
+# Playwright E2E tests
 npm run test:e2e
 ```
 
-### Testabdeckung
-- Spiellogik: Schachregeln und Figurenbewegung
-- KI-Engine: Zugberechnung und Strategie
-- Benutzeroberfläche: Interaktion und Responsivität
-- Cross-Browser: Chrome, Firefox, Safari, Edge
+### Test Coverage
+- Game logic: Chess rules and piece movement
+- AI engine: Move calculation and strategy
+- User interface: Interaction and responsiveness
+- Cross-browser: Chrome, Firefox, Safari, Edge
 
----
+## Statistics
 
-## 📊 Statistics
-
-<div align="center">
-
-| Metrik | Wert |
+| Metric | Value |
 |--------|-------|
-| 📝 Codezeilen | ~2,500 |
-| 🧪 Testabdeckung | 80%+ |
-| 📦 Abhängigkeiten | 8 |
-| 🔄 Zuletzt aktualisiert | {{DATUM}} |
+| Lines of Code | ~2,500 |
+| Test Coverage | 80%+ |
+| Dependencies | 8 |
+| Last Updated | 2026-03-31 |
 
-</div>
+## Roadmap
 
----
+- [ ] **Phase 1**: Multiple AI strategies
+- [ ] **Phase 2**: Online multiplayer
+- [ ] **Phase 3**: Chess puzzles and tutorials
+- [ ] **Phase 4**: Mobile app
+- [ ] **Phase 5**: Chess engine API
 
-## 🛣️ Roadmap
+## Contributing
 
-- [ ] **Phase 1**: Mehrere KI-Strategien
-- [ ] **Phase 2**: Online-Multiplayer
-- [ ] **Phase 3**: Schachaufgaben und Tutorials
-- [ ] **Phase 4**: Mobile App
-- [ ] **Phase 5**: Schach-Engine API
+We welcome contributions! Here's how you can help:
 
----
-
-## 🤝 Contributing
-
-Wir begrüßen Beiträge! So können Sie helfen:
-
-1. 🍴 **Fork** des Repository
-2. 🌿 **Feature-Branch erstellen** (`git checkout -b feature/amazing-feature`)
-3. 💾 **Änderungen committen** (`git commit -m 'Add amazing feature'`)
-4. 📤 **Zum Branch pushen** (`git push origin feature/amazing-feature`)
-5. 🔃 **Pull Request öffnen**
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ### Development Setup
 ```bash
-# Klonen und einrichten
+# Clone and setup
 git clone https://github.com/OutBlade/aggressor-chess-web.git
 cd aggressor-chess-web
 
-# Abhängigkeiten installieren
+# Install dependencies
 npm install
 
-# Entwicklungsserver starten
+# Start development server
 npm run dev
 ```
 
 ### Code Style
-- JavaScript ES6+ Standards verwenden
-- Verständliche Variablennamen
-- Kommentare für komplexe Logik
-- CSS mit BEM-Konventionen
+- JavaScript ES6+ standards
+- Clear variable names
+- Comments for complex logic
+- CSS with BEM conventions
 
----
+## Changelog
 
-## 📝 Changelog
-
-### [1.0.0] - Initiales Release
-- ✨ Grundlegende Schachfunktionalität
-- 🤖 KI-Gegner mit verschiedenen Schwierigkeitsgraden
-- 🎨 Modernes responsives Interface
-- 📚 Umfassende Dokumentation
+### [1.0.0] - Initial Release
+- Basic chess functionality
+- AI opponent with difficulty levels
+- Modern responsive interface
+- Comprehensive documentation
 
 [View Full Changelog](CHANGELOG.md)
 
----
+## Acknowledgments
 
-## 🙏 Acknowledgments
+- [Chess.js](https://chessboardjs.com/) for chess engine foundations
+- [Stockfish](https://stockfishchess.org/) for AI chess inspiration
+- [Material Design](https://material.io/) for UI components
+- The open-source chess community for algorithms and patterns
 
-- [Chess.js](https://chessboardjs.com/) für Schach-Engine-Grundlagen
-- [Stockfish](https://stockfishchess.org/) für KI-Schach-Inspiration
-- [Material Design](https://material.io/) für UI-Komponenten
-- Die Open-Source-Schach-Community für Algorithmen und Patterns
+## License
 
----
+This project is licensed under MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📄 License
+## Links
 
-Dieses Projekt steht unter MIT Lizenz - siehe [LICENSE](LICENSE) Datei für Details.
-
----
-
-## 🔗 Links
-
-<div align="center">
-
-[♟️ Play Online](https://outblade.github.io/aggressor-chess-web/) • [📖 Chess Rules](https://en.wikipedia.org/wiki/Rules_of_chess) • [🐛 Issues](https://github.com/OutBlade/aggressor-chess-web/issues) • [💬 Discussions](https://github.com/OutBlade/aggressor-chess-web/discussions)
-
-[![GitHub followers](https://img.shields.io/github/followers/OutBlade?style=social)](https://github.com/OutBlade)
-[![GitHub stars](https://img.shields.io/github/stars/OutBlade/aggressor-chess-web?style=social)](https://github.com/OutBlade/aggressor-chess-web)
-
-</div>
+[Play Online](https://outblade.github.io/aggressor-chess-web/) • [Chess Rules](https://en.wikipedia.org/wiki/Rules_of_chess) • [Issues](https://github.com/OutBlade/aggressor-chess-web/issues) • [Discussions](https://github.com/OutBlade/aggressor-chess-web/discussions)
 
 ---
 
-<div align="center">
-Made with ♟️ and ❤️ by [OutBlade](https://github.com/OutBlade)
-</div>
+Made with passion by [OutBlade](https://github.com/OutBlade)
