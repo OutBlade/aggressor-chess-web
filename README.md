@@ -2,7 +2,7 @@
 
 **Live Demo:** [https://outblade.github.io/aggressor-chess-web/](https://outblade.github.io/aggressor-chess-web/)
 
-![Website Screenshot](https://image.thum.io/get/width/1200/crop/900/https://outblade.github.io/aggressor-chess-web/)
+![Website Screenshot](screenshot.png)
 
 A web-based chess game with intelligent AI opponent. Play chess online against a challenging computer opponent with multiple difficulty levels. Built with JavaScript, HTML5 Canvas, and modern web technologies.
 
