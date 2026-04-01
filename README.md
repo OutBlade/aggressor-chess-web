@@ -1,31 +1,39 @@
-# Aggressor Chess
+# Aggressor Chess - Online Chess Game with AI Opponent
 
-**[https://outblade.github.io/aggressor-chess-web/](https://outblade.github.io/aggressor-chess-web/)**
+**Live Demo:** [https://outblade.github.io/aggressor-chess-web/](https://outblade.github.io/aggressor-chess-web/)
 
-A web-based chess game with intelligent AI opponent.
+A web-based chess game with intelligent AI opponent. Play chess online against a challenging computer opponent with multiple difficulty levels. Built with JavaScript, HTML5 Canvas, and modern web technologies.
+
+**Keywords:** online chess game, chess AI, play chess against computer, web-based chess, JavaScript chess engine, AI chess opponent, browser chess game
 
 ## Features
 
-- **Complete Chess**: All standard chess rules and pieces
-- **AI Opponent**: Intelligent computer opponent with various difficulty levels
-- **Interactive Interface**: Drag-and-drop piece movement
-- **Game Analysis**: Real-time move evaluation and position assessment
-- **Difficulty Levels**: Beginner, Intermediate, Master
-- **Mobile-Friendly**: Responsive design for all devices
-- **Game States**: Automatic save and load functionality
+- **Complete Chess Rules**: All standard chess rules and pieces with move validation
+- **AI Chess Engine**: Intelligent computer opponent with multiple difficulty levels
+- **Interactive Chess Interface**: Drag-and-drop piece movement with visual feedback
+- **Chess Game Analysis**: Real-time move evaluation and position assessment
+- **Difficulty Levels**: Beginner, Intermediate, Master - suitable for all skill levels
+- **Mobile-Friendly Chess**: Responsive design optimized for all devices
+- **Save and Load Games**: Automatic game state management
 
 ## Live Demo
 
-Visit the live demo to experience the full chess game:
+**Play chess online now:** [Aggressor Chess Live Demo](https://outblade.github.io/aggressor-chess-web/)
 
-[Aggressor Chess Live Demo](https://outblade.github.io/aggressor-chess-web/)
+**What you can do:**
+- Play chess against AI opponent online
+- Choose difficulty level (Beginner to Master)
+- Drag and drop chess pieces
+- Real-time game analysis
+- Mobile-optimized chess experience
 
-**Key Features:**
-- Fully functional chess game with AI opponent
-- Intelligent AI engine with multiple difficulty levels
-- Drag-and-drop interface for piece movement
-- Real-time game analysis and position evaluation
-- Mobile-optimized responsive design
+## Technology Stack
+
+- **Frontend:** JavaScript ES6+, HTML5 Canvas API, CSS3
+- **Chess Engine:** Custom JavaScript chess engine with minimax algorithm
+- **AI Algorithm:** Alpha-beta pruning with position evaluation
+- **Build Tools:** Node.js, npm
+- **Deployment:** GitHub Pages
 
 ## Installation
 
@@ -36,76 +44,76 @@ Visit the live demo to experience the full chess game:
 
 ### Quick Start
 ```bash
-# Clone the repository
+# Clone the chess repository
 git clone https://github.com/OutBlade/aggressor-chess-web.git
 cd aggressor-chess-web
 
-# Install dependencies
+# Install chess game dependencies
 npm install
 
-# Start development server
+# Start chess development server
 npm run dev
 ```
 
 ### Production Build
 ```bash
-# Build for production
+# Build chess game for production
 npm run build
 
-# Deploy the built files from /public directory
+# Deploy the chess game files from /public directory
 ```
 
 ## Usage
 
-### Basic Usage
+### Basic Chess Game Usage
 ```javascript
-// Initialize the game
-const game = new ChessGame({
+// Initialize chess game with AI
+const chessGame = new ChessGame({
     difficulty: 'medium', // 'easy', 'medium', 'hard'
     playerColor: 'white',
     aiOpponent: true
 });
 
-// Initialize the board
-game.initialize();
+// Start chess game
+chessGame.initialize();
 
-// Move pieces
-game.movePiece('e2', 'e4'); // Pawn to e4
-game.movePiece('d1', 'h5'); // Queen to h5
+// Move chess pieces
+chessGame.movePiece('e2', 'e4'); // Pawn to e4
+chessGame.movePiece('d1', 'h5'); // Queen to h5
 
-// Get AI move
-const aiMove = game.getAIMove();
-game.makeMove(aiMove.from, aiMove.to);
+// Get AI chess move
+const aiMove = chessGame.getAIMove();
+chessGame.makeMove(aiMove.from, aiMove.to);
 ```
 
-### Advanced Features
+### Advanced Chess Features
 ```javascript
-// Adjust difficulty
-game.setDifficulty('hard');
+// Adjust chess AI difficulty
+chessGame.setDifficulty('hard');
 
-// Analyze position
-const analysis = game.analyzePosition();
-console.log('Position evaluation:', analysis.score);
+// Analyze chess position
+const positionAnalysis = chessGame.analyzePosition();
+console.log('Chess position evaluation:', positionAnalysis.score);
 
-// Save game
-game.saveGame('my_game_001');
+// Save chess game
+chessGame.saveGame('my_chess_game_001');
 
-// Load game history
-const history = game.getGameHistory();
-game.loadGame('my_game_001');
+// Load chess game history
+const chessHistory = chessGame.getGameHistory();
+chessGame.loadGame('my_chess_game_001');
 ```
 
-### AI Engine Configuration
+### Chess AI Configuration
 ```javascript
-// Configure AI behavior
-const aiConfig = {
-    depth: 4,           // Search depth
-    timeLimit: 5000,    // Time limit per move in ms
-    style: 'aggressive', // 'defensive', 'balanced'
-    openingBook: true   // Use opening book
+// Configure chess AI behavior
+const chessAIConfig = {
+    depth: 4,           // Search depth for AI
+    timeLimit: 5000,    // Time limit per chess move in ms
+    style: 'aggressive', // 'defensive', 'balanced', 'aggressive'
+    openingBook: true   // Use chess opening book
 };
 
-game.setAIConfig(aiConfig);
+chessGame.setAIConfig(chessAIConfig);
 ```
 
 ## Project Structure
@@ -145,7 +153,17 @@ npm run test:e2e
 - User interface: Interaction and responsiveness
 - Cross-browser: Chrome, Firefox, Safari, Edge
 
-## Statistics
+## SEO Keywords
+
+This online chess game is optimized for searches related to:
+- Online chess game
+- Play chess against computer
+- Chess AI opponent
+- Browser chess game
+- JavaScript chess engine
+- Web-based chess
+- Free online chess
+- Chess practice against AI
 
 | Metric | Value |
 |--------|-------|
@@ -156,32 +174,32 @@ npm run test:e2e
 
 ## Roadmap
 
-- [ ] **Phase 1**: Multiple AI strategies
-- [ ] **Phase 2**: Online multiplayer
+- [ ] **Phase 1**: Multiple chess AI strategies
+- [ ] **Phase 2**: Online multiplayer chess
 - [ ] **Phase 3**: Chess puzzles and tutorials
-- [ ] **Phase 4**: Mobile app
+- [ ] **Phase 4**: Mobile chess app
 - [ ] **Phase 5**: Chess engine API
 
 ## Contributing
 
-We welcome contributions! Here's how you can help:
+We welcome contributions to improve this online chess game! Here's how:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+1. Fork the chess repository
+2. Create a feature branch (`git checkout -b feature/chess-improvement`)
+3. Commit chess improvements (`git commit -m 'Improve chess AI'`)
+4. Push chess changes (`git push origin feature/chess-improvement`)
 5. Open a Pull Request
 
 ### Development Setup
 ```bash
-# Clone and setup
+# Clone and setup chess project
 git clone https://github.com/OutBlade/aggressor-chess-web.git
 cd aggressor-chess-web
 
-# Install dependencies
+# Install chess dependencies
 npm install
 
-# Start development server
+# Start chess development server
 npm run dev
 ```
 
@@ -191,20 +209,16 @@ npm run dev
 - Comments for complex logic
 - CSS with BEM conventions
 
-## Changelog
+## Related Chess Projects
 
-### [1.0.0] - Initial Release
-- Basic chess functionality
-- AI opponent with difficulty levels
-- Modern responsive interface
-- Comprehensive documentation
-
-[View Full Changelog](CHANGELOG.md)
+- [Stockfish](https://stockfishchess.org/) - Open-source chess engine
+- [Chess.js](https://chessboardjs.com/) - JavaScript chess library
+- [Lichess](https://lichess.org/) - Free online chess platform
 
 ## Acknowledgments
 
-- [Chess.js](https://chessboardjs.com/) for chess engine foundations
 - [Stockfish](https://stockfishchess.org/) for AI chess inspiration
+- [Chess.js](https://chessboardjs.com/) for chess engine foundations
 - [Material Design](https://material.io/) for UI components
 - The open-source chess community for algorithms and patterns
 
@@ -214,8 +228,13 @@ This project is licensed under MIT License - see the [LICENSE](LICENSE) file for
 
 ## Links
 
-[Play Online](https://outblade.github.io/aggressor-chess-web/) • [Chess Rules](https://en.wikipedia.org/wiki/Rules_of_chess) • [Issues](https://github.com/OutBlade/aggressor-chess-web/issues) • [Discussions](https://github.com/OutBlade/aggressor-chess-web/discussions)
+- **Play Chess Online:** [https://outblade.github.io/aggressor-chess-web/](https://outblade.github.io/aggressor-chess-web/)
+- **GitHub Repository:** [https://github.com/OutBlade/aggressor-chess-web](https://github.com/OutBlade/aggressor-chess-web)
+- **Chess Rules:** [https://en.wikipedia.org/wiki/Rules_of_chess](https://en.wikipedia.org/wiki/Rules_of_chess)
+- **Report Issues:** [https://github.com/OutBlade/aggressor-chess-web/issues](https://github.com/OutBlade/aggressor-chess-web/issues)
 
 ---
 
 Made with passion by [OutBlade](https://github.com/OutBlade)
+
+**Tags:** online chess, chess game, chess AI, play chess, browser chess, JavaScript chess, HTML5 chess
