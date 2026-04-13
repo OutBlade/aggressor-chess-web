@@ -4,12 +4,13 @@
  * Shows update notification when new version is deployed.
  */
 
-const CACHE_NAME = 'aggressor-chess-v4';
+const CACHE_NAME = 'aggressor-chess-v5';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './app.js',
+  './openings.js',
   './manifest.json',
   './lib/chess.min.js',
   './lib/stockfish.js',
