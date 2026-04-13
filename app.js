@@ -595,10 +595,17 @@ function setupDiffButtons() {
 function setupModeButtons() {
   document.querySelectorAll('.mode-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      mode = btn.dataset.mode;
+      const newMode = btn.dataset.mode;
       document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      resetGame();
+      if (newMode === 'openings') {
+        mode = 'openings';
+        enterOpeningsMode();
+      } else {
+        if (mode === 'openings') exitOpeningsMode();
+        mode = newMode;
+        resetGame();
+      }
     });
   });
 }
@@ -643,6 +650,145 @@ function setupStyleButtons() {
   });
 }
 
+// ── Openings Explorer ─────────────────────────────────────────────────────────
+
+let openingFilter    = 'all';
+let selectedOpening  = null;   // object from OPENINGS
+let openingStep      = 0;      // how many moves have been played
+
+function enterOpeningsMode() {
+  document.getElementById('panel').style.display          = 'none';
+  document.getElementById('openings-panel').style.display = 'flex';
+  renderOpeningList();
+  // Show the start position
+  game = new Chess();
+  lastMove = null; selected = null; legalDests = [];
+  renderBoard(); renderCoords();
+}
+
+function exitOpeningsMode() {
+  document.getElementById('openings-panel').style.display = 'none';
+  document.getElementById('panel').style.display          = 'flex';
+}
+
+function renderOpeningList() {
+  showOpeningList();
+  const container = document.getElementById('opening-list');
+  container.innerHTML = '';
+  const filtered = OPENINGS.filter(o => openingFilter === 'all' || o.style === openingFilter);
+  filtered.forEach((op, idx) => {
+    const item = document.createElement('div');
+    item.className = 'opening-item';
+    item.innerHTML = `
+      <div>
+        <div class="opening-item-name">${op.name}</div>
+        <div class="opening-item-eco">${op.eco}</div>
+      </div>
+      <span class="opening-badge ${op.style}">${op.style}</span>`;
+    item.onclick = () => openOpening(op);
+    container.appendChild(item);
+  });
+}
+
+function showOpeningList() {
+  document.getElementById('opening-list-view').style.display   = 'block';
+  document.getElementById('opening-detail-view').style.display = 'none';
+  // Reset board to start
+  game = new Chess(); lastMove = null; selected = null; legalDests = [];
+  renderBoard(); renderCoords();
+}
+
+function openOpening(op) {
+  selectedOpening = op;
+  openingStep     = 0;
+  document.getElementById('opening-list-view').style.display   = 'none';
+  document.getElementById('opening-detail-view').style.display = 'flex';
+  document.getElementById('opening-detail-name').textContent   = op.name;
+  document.getElementById('opening-detail-eco').textContent    = op.eco;
+  document.getElementById('opening-detail-badge').className    = `opening-badge ${op.style}`;
+  document.getElementById('opening-detail-badge').textContent  = op.style;
+  document.getElementById('opening-detail-desc').textContent   = op.description;
+  // Reset board
+  game = new Chess(); lastMove = null; selected = null; legalDests = [];
+  renderBoard(); renderCoords();
+  renderOpeningMoves();
+  updateOpeningNav();
+}
+
+function renderOpeningMoves() {
+  const strip = document.getElementById('opening-moves-strip');
+  strip.innerHTML = '';
+  const op = selectedOpening;
+  op.moves.forEach((san, i) => {
+    if (i % 2 === 0) {
+      const num = document.createElement('span');
+      num.className  = 'move-num-token';
+      num.textContent = `${Math.floor(i / 2) + 1}.`;
+      strip.appendChild(num);
+    }
+    const tok = document.createElement('span');
+    tok.className   = 'move-token' + (i < openingStep ? ' played' : '') + (i === openingStep - 1 ? ' active' : '');
+    tok.textContent = san;
+    tok.onclick     = () => openingStepTo(i + 1);
+    strip.appendChild(tok);
+  });
+}
+
+function openingStepTo(n) {
+  n = Math.max(0, Math.min(n, selectedOpening.moves.length));
+  openingStep = n;
+  // Rebuild game state
+  game = new Chess(); lastMove = null;
+  for (let i = 0; i < n; i++) {
+    const result = game.move(selectedOpening.moves[i]);
+    if (result) lastMove = { from: result.from, to: result.to };
+  }
+  selected = null; legalDests = [];
+  renderBoard(); renderCoords();
+  renderOpeningMoves();
+  updateOpeningNav();
+}
+
+function updateOpeningNav() {
+  const total = selectedOpening.moves.length;
+  document.getElementById('opening-step-info').textContent =
+    `Move ${openingStep} / ${total}`;
+  document.getElementById('btn-opening-prev').disabled = openingStep === 0;
+  document.getElementById('btn-opening-next').disabled = openingStep === total;
+}
+
+function setupOpeningsPanel() {
+  // Filter buttons
+  document.getElementById('opening-filter').addEventListener('click', e => {
+    const btn = e.target.closest('[data-filter]');
+    if (!btn) return;
+    openingFilter = btn.dataset.filter;
+    document.querySelectorAll('#opening-filter .diff-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderOpeningList();
+  });
+
+  document.getElementById('btn-opening-prev').onclick = () => openingStepTo(openingStep - 1);
+  document.getElementById('btn-opening-next').onclick = () => openingStepTo(openingStep + 1);
+
+  document.getElementById('btn-back-to-list').onclick = () => {
+    selectedOpening = null; openingStep = 0;
+    renderOpeningList();
+  };
+
+  document.getElementById('btn-play-from-here').onclick = () => {
+    // Switch to vs_ai with the current board position (no reset)
+    mode = 'vs_ai';
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-vs-ai').classList.add('active');
+    exitOpeningsMode();
+    gameOver = false; thinking = false;
+    selected = null; legalDests = [];
+    updatePanel();
+    maybeEngine();
+  };
+}
+
 // ── PWA Install ───────────────────────────────────────────────────────────────
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -685,6 +831,7 @@ window.addEventListener('load', () => {
   setupStyleButtons();
   setupModeButtons();
   setupActionButtons();
+  setupOpeningsPanel();
   renderCoords();
   renderBoard();
   updatePanel();
