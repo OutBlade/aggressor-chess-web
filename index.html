@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Aggressor Chess AI | Outblade</title>
 
   <!-- Basic SEO -->
-  <meta name="description" content="Spiele gegen die Aggressor Chess AI von Outblade. Ein starkes Web-Schachspiel mit einer custom Stockfish-Engine, die auf aggressive Angriffe und Opfer optimiert ist. Kostenlos, offline spielbar, direkt im Browser oder als App." />
-  <meta name="keywords" content="Aggressor Chess AI Outblade, Aggressor Chess, Outblade Schach KI, Aggressive Stockfish Web App, Opfer-Schach AI, Schach spielen kostenlos, Browser Chess Engine, Patricia Chess Engine, Adam Kulju, extreme aggression chess engine, EAS tool Stefan Pohl, tactical chess AI, sacrifice-heavy chess, Willow neural network, superhuman strength chess, LC0 alternative, open-source aggressive chess engine, Patricia Schach Engine Alternative" />
+  <meta name="description" content="Play against the Aggressor Chess AI by Outblade. A powerful web chess game with a custom Stockfish engine optimised for aggressive attacks and sacrifices. Free, playable offline, directly in your browser or as an app." />
+  <meta name="keywords" content="Aggressor Chess AI Outblade, Aggressor Chess, Outblade Chess AI, Aggressive Stockfish Web App, Sacrifice Chess AI, play chess free, Browser Chess Engine, Patricia Chess Engine, Adam Kulju, extreme aggression chess engine, EAS tool Stefan Pohl, tactical chess AI, sacrifice-heavy chess, Willow neural network, superhuman strength chess, LC0 alternative, open-source aggressive chess engine" />
   <meta name="author" content="Outblade" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://OutBlade.github.io/aggressor-chess-web/" />
@@ -20,7 +20,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Aggressor Chess AI | Outblade" />
-  <meta property="og:description" content="Spiele gegen die aggressive Outblade Schach-KI. Kostenlos und extrem stark!" />
+  <meta property="og:description" content="Play against the aggressive Outblade Chess AI. Free and extremely strong!" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://OutBlade.github.io/aggressor-chess-web/" />
 
@@ -31,7 +31,7 @@
     "@type": "WebApplication",
     "name": "Aggressor Chess AI Outblade",
     "url": "https://OutBlade.github.io/aggressor-chess-web/",
-    "description": "Ein modernes Schachspiel mit einer aggressiv modifizierten Stockfish-KI (Outblade), das im Browser läuft und als PWA installierbar ist.",
+    "description": "A modern chess game with an aggressively modified Stockfish AI (Outblade), running in the browser and installable as a PWA.",
     "applicationCategory": "GameApplication",
     "operatingSystem": "All",
     "author": {
@@ -54,8 +54,8 @@
     <header id="topbar">
       <div id="logo">♟ AGGRESSOR</div>
       <div id="mode-toggle">
-        <button class="mode-btn active" data-mode="vs_ai" id="btn-vs-ai">vs. KI</button>
-        <button class="mode-btn" data-mode="vs_human" id="btn-vs-human">vs. Mensch</button>
+        <button class="mode-btn active" data-mode="vs_ai" id="btn-vs-ai">vs. AI</button>
+        <button class="mode-btn" data-mode="vs_human" id="btn-vs-human">vs. Human</button>
       </div>
       <div id="engine-badge">
         <span class="badge-dot"></span>
@@ -81,7 +81,7 @@
 
         <!-- Turn / Status -->
         <div id="status-box">
-          <div id="turn-indicator">Warte auf Engine…</div>
+          <div id="turn-indicator">Waiting for engine…</div>
           <div id="eval-bar-wrap">
             <div id="eval-bar-fill"></div>
             <span id="eval-label"></span>
@@ -90,45 +90,45 @@
 
         <!-- Difficulty -->
         <div class="panel-section">
-          <div class="section-label">Schwierigkeit</div>
+          <div class="section-label">Difficulty</div>
           <div id="diff-buttons"></div>
         </div>
 
         <!-- Playstyle -->
         <div class="panel-section">
-          <div class="section-label">Spielstil</div>
+          <div class="section-label">Play Style</div>
           <div id="style-buttons"></div>
         </div>
 
         <!-- Aggression Threshold -->
         <div class="panel-section">
-          <div class="section-label">Aggressions-Schwellwert: <span id="threshold-val">45</span> cp</div>
+          <div class="section-label">Aggression Threshold: <span id="threshold-val">45</span> cp</div>
           <input type="range" id="threshold-slider" min="0" max="150" value="45" step="5" />
-          <div class="hint">0 = reines Stockfish &nbsp;|&nbsp; 150 = maximale Aggression</div>
+          <div class="hint">0 = pure Stockfish &nbsp;|&nbsp; 150 = maximum aggression</div>
         </div>
 
         <!-- Move History -->
         <div class="panel-section" style="flex:1; min-height:0;">
-          <div class="section-label">Zughistorie</div>
+          <div class="section-label">Move History</div>
           <div id="move-list"></div>
         </div>
 
         <!-- Captured pieces -->
         <div class="panel-section">
-          <div id="captured-w"><span class="cap-label">Weiß verloren:</span></div>
-          <div id="captured-b"><span class="cap-label">Schwarz verloren:</span></div>
+          <div id="captured-w"><span class="cap-label">White lost:</span></div>
+          <div id="captured-b"><span class="cap-label">Black lost:</span></div>
         </div>
 
         <!-- Action Buttons -->
         <div id="action-buttons">
-          <button id="btn-new"  class="action-btn green">Neues Spiel</button>
-          <button id="btn-undo" class="action-btn blue">⬅ Zurück</button>
-          <button id="btn-flip" class="action-btn purple">⇅ Drehen</button>
+          <button id="btn-new"  class="action-btn green">New Game</button>
+          <button id="btn-undo" class="action-btn blue">⬅ Undo</button>
+          <button id="btn-flip" class="action-btn purple">⇅ Flip</button>
         </div>
 
         <!-- Install PWA -->
         <div id="install-wrap" style="display:none;">
-          <button id="btn-install" class="action-btn gold">📲 App installieren</button>
+          <button id="btn-install" class="action-btn gold">📲 Install App</button>
         </div>
 
       </aside>
@@ -137,16 +137,16 @@
     <!-- Overlays -->
     <div id="promotion-overlay" class="overlay hidden">
       <div class="overlay-box">
-        <div class="overlay-title">Bauernumwandlung</div>
+        <div class="overlay-title">Pawn Promotion</div>
         <div id="promo-choices"></div>
       </div>
     </div>
 
     <div id="gameover-overlay" class="overlay hidden">
       <div class="overlay-box">
-        <div class="overlay-title" id="gameover-title">Spielende</div>
+        <div class="overlay-title" id="gameover-title">Game Over</div>
         <div id="gameover-msg"></div>
-        <button id="btn-gameover-new" class="action-btn green" style="margin-top:20px;">Neues Spiel</button>
+        <button id="btn-gameover-new" class="action-btn green" style="margin-top:20px;">New Game</button>
       </div>
     </div>
 

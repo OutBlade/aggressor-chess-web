@@ -16,12 +16,12 @@ const GLYPHS = {
 };
 
 const DIFFICULTIES = {
-  'Anfänger': { elo:600,  movetime:200,  multipv:5 },
-  'Leicht':   { elo:1000, movetime:400,  multipv:5 },
-  'Mittel':   { elo:1500, movetime:800,  multipv:6 },
-  'Schwer':   { elo:2000, movetime:1400, multipv:8 },
-  'Experte':  { elo:2500, movetime:2500, multipv:8 },
-  'Meister':  { elo:3600, movetime:4000, multipv:10 },
+  'Beginner':  { elo:600,  movetime:200,  multipv:5 },
+  'Easy':      { elo:1000, movetime:400,  multipv:5 },
+  'Medium':    { elo:1500, movetime:800,  multipv:6 },
+  'Hard':      { elo:2000, movetime:1400, multipv:8 },
+  'Expert':    { elo:2500, movetime:2500, multipv:8 },
+  'Master':    { elo:3600, movetime:4000, multipv:10 },
 };
 
 let AGGRESSION_THRESHOLD = 45;   // centipawns (user-adjustable)
@@ -31,8 +31,8 @@ const AGGR_MIN_ADVANTAGE  = 25;  // minimum extra aggression to override
 let game        = new Chess();
 let flipped     = false;
 let mode        = 'vs_ai';      // 'vs_ai' | 'vs_human'
-let difficulty  = 'Mittel';
-let playstyle   = 'Aggressiv';  // 'Aggressiv' | 'Normal' | 'Passiv'
+let difficulty  = 'Medium';
+let playstyle   = 'Aggressive';  // 'Aggressive' | 'Normal' | 'Passive'
 let selected    = null;         // currently selected square ('e2' etc.)
 let legalDests  = [];
 let lastMove    = null;         // {from, to}
@@ -63,7 +63,7 @@ function initStockfish() {
     if (line === 'readyok') {
       engineReady = true;
       document.querySelector('.badge-dot').classList.add('ready');
-      document.getElementById('engine-label').textContent = 'Stockfish 10 bereit';
+      document.getElementById('engine-label').textContent = 'Stockfish 10 ready';
       // If AI goes first (playing black vs user), kick engine
       maybeEngine();
       return;
@@ -180,7 +180,7 @@ function styleScore(fen, uciMove) {
     if (advRank >= 5) agg += 25;
   }
 
-  if (playstyle === 'Aggressiv') return agg;
+  if (playstyle === 'Aggressive') return agg;
 
   let pas = 0;
   if (piece && piece.type === 'p') pas -= 50;
@@ -426,7 +426,7 @@ function maybeEngine() {
   if (!engineReady || thinking || gameOver) return;
 
   thinking = true;
-  document.getElementById('turn-indicator').textContent = 'Engine denkt…';
+  document.getElementById('turn-indicator').textContent = 'Engine thinking…';
   document.getElementById('board-grid').classList.add('thinking');
 
   getAggressorMove().then(uciMove => {
@@ -467,21 +467,21 @@ function checkGameOver() {
     gameOver = true;
     let title, msg;
     if (game.in_checkmate()) {
-      const winner = game.turn() === 'w' ? 'Schwarz' : 'Weiß';
-      title = '🏆 Schachmatt!';
-      msg   = `${winner} gewinnt!`;
+      const winner = game.turn() === 'w' ? 'Black' : 'White';
+      title = '🏆 Checkmate!';
+      msg   = `${winner} wins!`;
     } else if (game.in_stalemate()) {
-      title = '🤝 Patt!';
-      msg   = 'Unentschieden – Patt';
+      title = '🤝 Stalemate!';
+      msg   = 'Draw – Stalemate';
     } else if (game.insufficient_material()) {
-      title = '🤝 Unentschieden';
-      msg   = 'Unzureichendes Material';
+      title = '🤝 Draw';
+      msg   = 'Insufficient material';
     } else if (game.in_threefold_repetition()) {
-      title = '🤝 Unentschieden';
-      msg   = 'Dreifache Stellungswiederholung';
+      title = '🤝 Draw';
+      msg   = 'Threefold repetition';
     } else {
-      title = '🤝 Unentschieden';
-      msg   = 'Spiel beendet';
+      title = '🤝 Draw';
+      msg   = 'Game over';
     }
     document.getElementById('gameover-title').textContent = title;
     document.getElementById('gameover-msg').textContent   = msg;
@@ -525,9 +525,9 @@ function undoMove() {
 function updatePanel() {
   // Turn indicator
   if (!gameOver && !thinking) {
-    const color = game.turn() === 'w' ? 'Weiß' : 'Schwarz';
-    const check = game.in_check() ? ' – Schach!' : '';
-    document.getElementById('turn-indicator').textContent = `${color} am Zug${check}`;
+    const color = game.turn() === 'w' ? 'White' : 'Black';
+    const check = game.in_check() ? ' – Check!' : '';
+    document.getElementById('turn-indicator').textContent = `${color} to move${check}`;
   }
 
   // Move list
@@ -551,8 +551,8 @@ function updatePanel() {
   // Captured
   const cw = document.getElementById('captured-w');
   const cb = document.getElementById('captured-b');
-  cw.innerHTML = '<span class="cap-label">Weiß verloren:</span>';
-  cb.innerHTML = '<span class="cap-label">Schwarz verloren:</span>';
+  cw.innerHTML = '<span class="cap-label">White lost:</span>';
+  cb.innerHTML = '<span class="cap-label">Black lost:</span>';
   capturedW.sort().forEach(pt => {
     const s = document.createElement('span'); s.textContent = GLYPHS['w'+pt.toUpperCase()]; cw.appendChild(s);
   });
@@ -629,7 +629,7 @@ function setupStyleButtons() {
   container.style.display = 'grid';
   container.style.gridTemplateColumns = '1fr 1fr 1fr';
   container.style.gap = '5px';
-  const styles = ['Aggressiv', 'Normal', 'Passiv'];
+  const styles = ['Aggressive', 'Normal', 'Passive'];
   styles.forEach(name => {
     const btn = document.createElement('button');
     btn.className = 'diff-btn' + (name === playstyle ? ' active' : '');
@@ -669,7 +669,7 @@ if ('serviceWorker' in navigator) {
             // New version available
             const msg = document.createElement('div');
             msg.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#5a9bff;color:#06091a;padding:12px 24px;border-radius:10px;font-weight:600;cursor:pointer;z-index:9999;';
-            msg.textContent = '🔄 Update verfügbar – Klicken zum Aktualisieren';
+            msg.textContent = '🔄 Update available – Click to refresh';
             msg.onclick = () => { newSW.postMessage({ type: 'SKIP_WAITING' }); location.reload(); };
             document.body.appendChild(msg);
           }
