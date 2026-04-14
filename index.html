@@ -133,6 +133,40 @@
         </div>
 
       </aside>
+
+      <!-- Openings Panel (inside layout, hidden by default) -->
+      <aside id="openings-panel" style="display:none;">
+        <div class="panel-section">
+          <div class="section-label">Opening Explorer</div>
+          <div id="opening-filter">
+            <button class="diff-btn active" data-filter="all">All</button>
+            <button class="diff-btn" data-filter="aggressive">Aggressive</button>
+            <button class="diff-btn" data-filter="passive">Passive</button>
+          </div>
+        </div>
+
+        <div id="opening-list-view">
+          <div id="opening-list"></div>
+        </div>
+
+        <div id="opening-detail-view" style="display:none;">
+          <div id="opening-detail-header">
+            <span id="opening-detail-name"></span>
+            <span id="opening-detail-eco"></span>
+            <span id="opening-detail-badge"></span>
+          </div>
+          <div id="opening-detail-desc"></div>
+          <div id="opening-moves-strip"></div>
+          <div id="opening-nav-row">
+            <button id="btn-opening-prev" class="action-btn blue">&#9664;</button>
+            <span id="opening-step-info">0 / 0</span>
+            <button id="btn-opening-next" class="action-btn blue">&#9654;</button>
+          </div>
+          <button id="btn-play-from-here" class="action-btn green">Play from here vs AI</button>
+          <button id="btn-back-to-list" class="action-btn purple">&#8592; Back</button>
+        </div>
+      </aside>
+
     </main>
 
     <!-- Overlays -->
@@ -152,39 +186,6 @@
     </div>
 
   </div><!-- #app -->
-
-  <!-- Openings Panel -->
-  <aside id="openings-panel" style="display:none;">
-    <div class="panel-section">
-      <div class="section-label">Opening Explorer</div>
-      <div id="opening-filter">
-        <button class="diff-btn active" data-filter="all">All</button>
-        <button class="diff-btn" data-filter="aggressive">Aggressive</button>
-        <button class="diff-btn" data-filter="passive">Passive</button>
-      </div>
-    </div>
-
-    <div id="opening-list-view">
-      <div id="opening-list"></div>
-    </div>
-
-    <div id="opening-detail-view" style="display:none;">
-      <div id="opening-detail-header">
-        <span id="opening-detail-name"></span>
-        <span id="opening-detail-eco"></span>
-        <span id="opening-detail-badge"></span>
-      </div>
-      <div id="opening-detail-desc"></div>
-      <div id="opening-moves-strip"></div>
-      <div id="opening-nav-row">
-        <button id="btn-opening-prev" class="action-btn blue">&#9664;</button>
-        <span id="opening-step-info">0 / 0</span>
-        <button id="btn-opening-next" class="action-btn blue">&#9654;</button>
-      </div>
-      <button id="btn-play-from-here" class="action-btn green">Play from here vs AI</button>
-      <button id="btn-back-to-list" class="action-btn purple">&#8592; Back</button>
-    </div>
-  </aside>
 
   <script src="lib/chess.min.js"></script>
   <script src="openings.js"></script>
